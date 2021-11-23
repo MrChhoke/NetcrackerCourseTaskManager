@@ -1,7 +1,9 @@
 package ua.edu.sumdu.j2se.bondar.tasks;
 
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 
 /**
@@ -36,13 +38,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
         if(capacity == size){
             array = reserve();
         }
-        if(task.isRepeated()){
-            array[size] = new Task(task.getTitle(),task.getStartTime(), task.getEndTime(), task.getRepeatInterval());
-            array[size].setActive(task.isActive());
-        }else{
-            array[size] = new Task(task.getTitle(),task.getStartTime());
-            array[size].setActive(task.isActive());
-        }
+        array[size] = task.clone();
         size++;
     }
 
@@ -193,5 +189,11 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
         }
 
         return String.valueOf(temp);
+    }
+
+
+    @Override
+    public Stream<Task> getStream() {
+        return Stream.of(array).limit(size);
     }
 }

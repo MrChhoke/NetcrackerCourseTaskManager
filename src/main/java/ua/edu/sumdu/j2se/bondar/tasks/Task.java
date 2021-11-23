@@ -1,6 +1,8 @@
 package ua.edu.sumdu.j2se.bondar.tasks;
 
 
+import java.time.LocalDateTime;
+
 /**
  * @author bondar
  * @version 1.0
@@ -13,7 +15,6 @@ public class Task implements Cloneable {
      * Атрибути класа
      * @param title назва події
      * @param active подія активна
-     * @param time час, коли подія відбудеться
      * @param start час, коли подія відбудеться вперше
      * @param end час, після якого подія не буде відбуватися
      * @param interval інтервал з яким відбувається подія
@@ -21,9 +22,8 @@ public class Task implements Cloneable {
 
     private String title;
     private boolean active;
-    private int time;
-    private int start;
-    private int end;
+    private LocalDateTime start;
+    private LocalDateTime end;
     private int interval = -1;
 
 
@@ -36,12 +36,12 @@ public class Task implements Cloneable {
      * @param title назва події
      * @param time час, коли подія відбудеться
      * */
-    public Task(String title, int time){
-        if(time < 0){
+    public Task(String title, LocalDateTime time){
+        if(time == null){
             throw  new  IllegalArgumentException();
         }
         this.title = title;
-        this.time = time;
+        this.start = LocalDateTime.from(time);
     }
 
     /**
@@ -51,31 +51,30 @@ public class Task implements Cloneable {
      * @param end час, після якого подія не буде відбуватися
      * @param interval інтервал з яким відбувається подія
      * */
-    public Task(String title, int start, int end, int interval){
-        if(start < 0 || end < 0 || interval<= 0){
+    public Task(String title, LocalDateTime start, LocalDateTime end, int interval){
+        if(start.getSecond() < 0 || end.getSecond() < 0 || interval<= 0){
             throw new  IllegalArgumentException();
         }
         this.title = title;
-        this.start = start;
-        this.end = end;
+        this.start = LocalDateTime.from(start);
+        this.end = LocalDateTime.from(end);
         this.interval = interval;
     }
 
-    public Task(Task task){
-        this.title = task.title;
-        this.start = task.start;
-        this.active = task.active;
-        this.end = task.end;
-        this.interval = task.interval;
-        this.time = task.time;
-    }
+//    public Task(Task task){
+//        this.title = task.title;
+//        this.start = task.start;
+//        this.active = task.active;
+//        this.end = task.end;
+//        this.interval = task.interval;
+//    }
 
     /**
      * Метод для отримання імені події
      * @return {@code title} імя подія
      * */
     public String getTitle(){
-        String temp = "123";
+        String temp = null;
         if(title != null) temp = title;
         return temp;
     }
@@ -110,23 +109,20 @@ public class Task implements Cloneable {
      * @return {@code start} якщо подія повторюється,то час початку першої події,
      * або {@code time} якщо подія не повторюється,то час події
      * */
-    public int getTime(){
-        if(isRepeated()) {
+    public LocalDateTime getTime(){
             return start;
-        }
-        return time;
     }
 
     /**
      * Метод для встановлення часу події
      * @param time час події
      * */
-    public void setTime(int time){
+    public void setTime(LocalDateTime time){
         interval = -1;
-        if(time < 0){
+        if(time.getSecond() < 0){
             throw new  IllegalArgumentException();
         }
-        this.time = time;
+        this.start = time;
     }
 
     /**
@@ -134,11 +130,8 @@ public class Task implements Cloneable {
      * @return {@code start} час початку першої, якщо подія повторюється,
      * або {@code time} час події, якщо подія не повторюється
      * */
-    public int getStartTime(){
-        if(isRepeated()) {
-            return start;
-        }
-        return time;
+    public LocalDateTime getStartTime(){
+        return start;
     }
 
 
@@ -147,11 +140,11 @@ public class Task implements Cloneable {
      * @return {@code end} час кінця першої, якщо подія повторюється,
      * або {@code time} час кінця події, якщо подія не повторюється
      * */
-    public int getEndTime(){
+    public LocalDateTime getEndTime(){
         if(isRepeated()) {
             return end;
         }
-        return time;
+        return start;
     }
 
     /**
@@ -161,7 +154,7 @@ public class Task implements Cloneable {
      * */
     public int getRepeatInterval(){
         if(isRepeated()) {
-            return interval;
+            return (int)interval;
         }
         else
             return 0;
@@ -173,12 +166,12 @@ public class Task implements Cloneable {
      * @param end час, після якого подія не буде відбуватися
      * @param interval інтервал з яким відбувається подія
      * */
-    public void setTime(int start, int end, int interval){
-        if(start < 0 || end < 0 || interval<= 0){
+    public void setTime(LocalDateTime start, LocalDateTime end, int interval){
+        if(start.getSecond() < 0 || end.getSecond() < 0 || interval<= 0){
             throw new  IllegalArgumentException();
         }
-        this.start = start;
-        this.end = end;
+        this.start = LocalDateTime.from(start);
+        this.end = LocalDateTime.from(end);
         this.interval = interval;
     }
 
@@ -202,22 +195,20 @@ public class Task implements Cloneable {
      * або temp якщо подія повторюється і активна іще час її першого початку пройшов,
      * в інших випадках {@code -1}
      * */
-    public int nextTimeAfter(int current){
-        if(isActive() && !isRepeated() && getStartTime() > current) {
-            return getStartTime();
-        }
+    public LocalDateTime nextTimeAfter(LocalDateTime current){
+        if(isActive() == false) return null;
+        if(current == null) return null;
 
-        if(getStartTime() > current && current + interval <= getEndTime() && isActive() && isRepeated()) {
-            return getStartTime();
-        }
+        if(!isRepeated() && getStartTime().compareTo(current) == 1) return getStartTime();
 
-        if(getStartTime() <= current && current + interval <= getEndTime() && isActive() && isRepeated()) {
-            int temp = getStartTime();
-            while( temp <= current ) {
-                temp += interval; }
-            return temp;
+        if(isRepeated()) {
+            for (LocalDateTime temp = start; end.compareTo(temp) != -1;
+                 temp = LocalDateTime.from(temp).plusSeconds(interval))
+                    if (current.compareTo(temp) == -1) {
+                    return temp;
+                }
         }
-        return -1;
+        return null;
     }
 
     @Override
@@ -225,9 +216,8 @@ public class Task implements Cloneable {
         int result = 0;
         result += title.hashCode();
         result += (!active ? 1 : 0);
-        result += time;
-        result += start;
-        result += end;
+        result += start.getSecond();
+        result += end != null ? end.getSecond() : 0;
         result += (interval == -1 ? 47 : interval);
         return result;
     }
@@ -240,10 +230,9 @@ public class Task implements Cloneable {
         Task task = (Task)obj;
         if(!title.equals(task.title)) return false;
         if(task.active != active) return false;
-        if(task.start != start) return false;
+        if(task.start != start ) return false;
         if(task.end != end) return false;
         if(task.interval != interval) return false;
-        if(task.time != time) return false;
 
         return true;
     }
@@ -260,8 +249,8 @@ public class Task implements Cloneable {
 
     @Override
     public String toString() {
-        String temp = "Title: " + time + "\nStart time: " + getStartTime() + "\nEnd time: " +
-                getEndTime() + "\nActive: " + active + "\nInterval: " + interval;
+        String temp = "\nTitle: " + getTitle() + "\nStart time: " + getStartTime() + "\nEnd time: " +
+                getEndTime() + "\nActive: " + active + "\nInterval: " + interval + '\n';
         return temp;
     }
 }

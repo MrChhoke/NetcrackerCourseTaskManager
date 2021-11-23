@@ -2,6 +2,7 @@ package ua.edu.sumdu.j2se.bondar.tasks;
 
 
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 public class LinkedTaskList extends AbstractTaskList implements Cloneable{
 
@@ -9,7 +10,8 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable{
     private Node first = new Node();
     private int size;
 
-    private class Node implements Cloneable{
+
+    private class Node{
         Task task = new Task();
         Node next = null;
         Node prev = null;
@@ -165,6 +167,21 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable{
 
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder temp = new StringBuilder();
+        for(Task arr: this){
+            temp.append(arr.toString());
+            temp.append('\n');
+            temp.append('\n');
+        }
+        return String.valueOf(temp);
+    }
+
+    @Override
+    public Stream<Task> getStream() {
+        Stream.Builder<Task> builder = Stream.builder();
+        for(Task temp : this){
+            builder.add(temp);
+        }
+        return builder.build();
     }
 }
