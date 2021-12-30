@@ -1,6 +1,7 @@
-package ua.edu.sumdu.j2se.bondar.tasks;
+package ua.edu.sumdu.j2se.bondar.tasks.model;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -8,9 +9,10 @@ import java.time.LocalDateTime;
  * @version 1.0
  * */
 
-public class Task implements Cloneable {
+public class Task implements Cloneable, Serializable {
 
 
+    private static final long serialVersionUID = -8083298998496615363L;
     /**
      * Атрибути класа
      * @param title назва події
@@ -21,7 +23,7 @@ public class Task implements Cloneable {
      * */
 
     private String title;
-    private boolean active;
+    private boolean  active;
     private LocalDateTime start;
     private LocalDateTime end;
     private int interval = -1;
@@ -218,7 +220,7 @@ public class Task implements Cloneable {
         result += (!active ? 1 : 0);
         result += start.getSecond();
         result += end != null ? end.getSecond() : 0;
-        result += (interval == -1 ? 47 : interval);
+        result += (interval != -1 ? interval : 0);
         return result;
     }
 
@@ -249,8 +251,12 @@ public class Task implements Cloneable {
 
     @Override
     public String toString() {
-        String temp = "\nTitle: " + getTitle() + "\nStart time: " + getStartTime() + "\nEnd time: " +
+        String temp = null;
+        if(isRepeated())
+            temp = "\nTitle: " + getTitle() + "\nStart time: " + getStartTime() + "\nEnd time: " +
                 getEndTime() + "\nActive: " + active + "\nInterval: " + interval + '\n';
+        else
+            temp = "Title: " + getTitle() + "\nTime: " + getStartTime() + "\nActive: " + active + '\n';
         return temp;
     }
 }

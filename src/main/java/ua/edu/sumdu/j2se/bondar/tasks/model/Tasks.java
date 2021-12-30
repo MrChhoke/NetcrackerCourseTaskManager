@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.bondar.tasks;
+package ua.edu.sumdu.j2se.bondar.tasks.model;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -12,22 +12,17 @@ public class Tasks {
                 arr.add(task);
             }
 
-        Iterable<Task> tasks1 = new Iterable<Task>() {
+        Iterable<Task> tasks1 = () -> new Iterator<Task>() {
+            int index = 0;
             @Override
-            public Iterator<Task> iterator() {
-                return new Iterator<Task>() {
-                    int index = 0;
-                    @Override
-                    public boolean hasNext() {
-                        if(index < arr.size()) return true;
-                        return false;
-                    }
+            public boolean hasNext() {
+                if(index < arr.size()) return true;
+                return false;
+            }
 
-                    @Override
-                    public Task next() {
-                        return arr.getTask(index++);
-                    }
-                };
+            @Override
+            public Task next() {
+                return arr.getTask(index++);
             }
         };
         return tasks1;

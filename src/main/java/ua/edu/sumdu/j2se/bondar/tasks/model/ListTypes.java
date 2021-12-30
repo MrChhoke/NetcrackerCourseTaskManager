@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.bondar.tasks;
+package ua.edu.sumdu.j2se.bondar.tasks.model;
 
 public class ListTypes {
     public enum types {

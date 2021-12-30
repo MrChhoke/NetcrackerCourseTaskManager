@@ -1,7 +1,6 @@
-package ua.edu.sumdu.j2se.bondar.tasks;
+package ua.edu.sumdu.j2se.bondar.tasks.model;
 
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
@@ -142,12 +141,13 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
         };
     }
 
+
+
     @Override
     public int hashCode() {
-        int result = 0;
-        for(int i = 0; i < size; i++){
-            result += this.getTask(i).hashCode() ;
-        }
+        int result = size;
+        for(int i = 0; i < size; i++)
+            result += array[i].hashCode();
         return result % size;
     }
 
