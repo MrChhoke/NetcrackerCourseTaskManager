@@ -1,6 +1,10 @@
 package ua.edu.sumdu.j2se.bondar.tasks.model;
 
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import ua.edu.sumdu.j2se.bondar.tasks.view.ConsoleUkrainianView;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -11,7 +15,7 @@ import java.time.LocalDateTime;
 
 public class Task implements Cloneable, Serializable {
 
-
+    private final static Logger logger = LogManager.getLogger(ConsoleUkrainianView.class);
     private static final long serialVersionUID = -8083298998496615363L;
     /**
      * Атрибути класа
@@ -244,7 +248,7 @@ public class Task implements Cloneable, Serializable {
         try {
             return (Task) super.clone();
         } catch (CloneNotSupportedException exception) {
-            exception.printStackTrace();
+            logger.error("CloneNotSupportedException in task: " + exception);
         }
         return null;
     }

@@ -41,10 +41,9 @@ public class NotificatorConsole implements Notificator, Runnable{
                 }
             }
             try {
-                Thread.sleep(1999);
+                Thread.sleep(4000);
             } catch (InterruptedException e) {
                 logger.error("Помилка роботи потоку у eventNotificator()");
-                e.printStackTrace();
             }
         }
     }
@@ -52,7 +51,6 @@ public class NotificatorConsole implements Notificator, Runnable{
     @Override
     public void startNotificator() {
         working = true;
-
     }
 
     @Override

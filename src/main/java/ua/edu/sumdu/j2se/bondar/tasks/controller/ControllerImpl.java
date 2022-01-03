@@ -17,6 +17,7 @@ public class ControllerImpl implements Controller{
     private final static Logger logger = LogManager.getLogger(ControllerImpl.class);
     private NotificatorConsole notificator = new NotificatorConsole(list);
     private Thread threadNotificator = new Thread(notificator);
+    private boolean notificationOn = false;
 
     ControllerImpl() throws IOException {
         readTasks();
@@ -52,13 +53,15 @@ public class ControllerImpl implements Controller{
             view.deleteTaskPage(list);
         if(menu == 4)
             view.changeTaskPage(list);
-        if(menu == 5) {
+        if(menu == 5 && !notificationOn) {
             view.notificationOn();
             threadNotificator.start();
+            notificationOn = true;
         }
-        if(menu == 6) {
+        if(menu == 6 && notificationOn) {
             view.notificationOff();
             notificator.shutdownNotificator();
+            notificationOn = false;
         }
         if(menu == 7)
             view.timeTaskPage(list);

@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 public class TaskIO {
 
+
+
     public static void write(AbstractTaskList tasks, OutputStream out){
         try (ObjectOutputStream file = new ObjectOutputStream(out)){
             file.writeInt(tasks.size());
@@ -28,7 +30,7 @@ public class TaskIO {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
 

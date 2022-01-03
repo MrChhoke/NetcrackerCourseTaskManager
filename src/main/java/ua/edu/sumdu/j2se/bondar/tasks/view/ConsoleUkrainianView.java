@@ -6,9 +6,11 @@ import ua.edu.sumdu.j2se.bondar.tasks.model.AbstractTaskList;
 import ua.edu.sumdu.j2se.bondar.tasks.model.Task;
 import ua.edu.sumdu.j2se.bondar.tasks.model.Tasks;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.SortedMap;
@@ -80,14 +82,14 @@ public class ConsoleUkrainianView implements View{
             String endTime = scanner.nextLine();
             LocalDateTime end = LocalDateTime.parse(endTime,formatter);
             System.out.println("Введіть час інтервал події (ціле значення): ");
-            int interval = scanner.nextInt();
+            int interval = Integer.parseInt(scanner.nextLine());
             Task task = new Task(title,start,end, interval);
             task.setActive(true);
             list.add(task);
             logger.info("Cтворено задачу: " + title);
-        }catch (DateTimeParseException e){
+        }catch (DateTimeParseException | InputMismatchException | NumberFormatException e){
             System.out.println("Некоректна дата!");
-            logger.error("Некоректна дата!");
+            logger.error("Некоректна дата!  " + e);
             return;
         }
     }
@@ -97,8 +99,25 @@ public class ConsoleUkrainianView implements View{
         taskPage(list);
         System.out.println("Введіть індекс для видалення:");
         Scanner scanner = new Scanner(System.in);
-        int index = scanner.nextInt();
-        list.remove(list.getTask(index-1));
+        int index = 0;
+        try {
+            index = Integer.parseInt(scanner.nextLine());
+        }catch (InputMismatchException | NumberFormatException e){
+            logger.error("Помилка вводу: " + e);
+            System.out.println("Помилка вводу");
+            return;
+        }
+        if(index-1 < 0){
+            logger.error("NullpointExp indexChange");
+            System.out.println("Некоректный индекс");
+            return;
+        }
+        try {
+            list.remove(list.getTask(index - 1));
+        }catch (NullPointerException e){
+            logger.error("NullpointExp: " + e);
+            System.out.println("Задача не существует");
+        }
     }
 
     @Override
@@ -106,7 +125,13 @@ public class ConsoleUkrainianView implements View{
         taskPage(list);
         Scanner scanner = new Scanner(System.in);
         System.out.println("Виберіть задачу, яку хочете змінити за індексом: ");
-        int index = scanner.nextInt();
+        int index = 0;
+        try {
+            index = Integer.parseInt(scanner.nextLine());
+        }catch (InputMismatchException | NumberFormatException e){
+            logger.error("Помилка вводу: " + e);
+            System.out.println("Помилка вводу");
+        }
         index--;
         System.out.println("Який параметр ви хочете змінити?\n" +
                 "1. Назву\n" +
@@ -115,7 +140,19 @@ public class ConsoleUkrainianView implements View{
                 "4. Відмінити зміни");
 
         System.out.println("Ваш вибір: ");
-        int indexChange = scanner.nextInt();
+        int indexChange = 0;
+        try {
+            indexChange = Integer.parseInt(scanner.nextLine());
+        }catch (InputMismatchException | NumberFormatException e){
+            logger.error("Помилка вводу: " + e);
+            System.out.println("Помилка вводу");
+            return;
+        }
+        if(indexChange < 1){
+            logger.error("NullpointExp indexChange");
+            System.out.println("Некоректный индекс");
+            return;
+        }
         if(indexChange == 1){
             System.out.println("Введіть нову назву:");
             String newTitle = scanner.nextLine();
@@ -125,7 +162,14 @@ public class ConsoleUkrainianView implements View{
         if(indexChange == 3){
             if(!list.getTask(index).isRepeated()) return;
             System.out.println("Введіть новий інтервал:");
-            int newInterval = scanner.nextInt();
+            int newInterval = 0;
+            try {
+                newInterval = Integer.parseInt(scanner.nextLine());
+            }catch (InputMismatchException | NumberFormatException e){
+                logger.error("Помилка вводу: " + e);
+                System.out.println("Помилка вводу");
+                return;
+            }
             list.getTask(index).setTime(list.getTask(index).getStartTime(), list.getTask(index).getEndTime(),newInterval);
             return;
         }
@@ -134,7 +178,13 @@ public class ConsoleUkrainianView implements View{
             if(!list.getTask(index).isRepeated()){
                 System.out.println("Введіть новий час у наступному форматі - yyyy-MM-dd HH:mm -> ");
                 String time = scanner.nextLine();
-                list.getTask(index).setTime(LocalDateTime.parse(time,formatter));
+                try {
+                    list.getTask(index).setTime(LocalDateTime.parse(time,formatter));
+                }catch (DateTimeParseException e){
+                    System.out.println("Некоректна дата!");
+                    logger.error("Некоректна дата! " + e);
+                }
+                return;
             }
             try {
                 System.out.println("Введіть новий час початку події у наступному форматі - yyyy-MM-dd HH:mm -> ");
@@ -147,8 +197,10 @@ public class ConsoleUkrainianView implements View{
             }catch (DateTimeParseException e){
                 System.out.println("Некоректна дата!");
                 logger.error("Некоректна дата! " + e);
+                return;
             }
         }
+        System.out.println("Невідома команда!");
     }
 
     @Override

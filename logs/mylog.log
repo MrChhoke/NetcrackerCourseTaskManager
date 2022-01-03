@@ -1,3 +1,29 @@
 2021-12-28 17:13:33 INFO  ConsoleUkrainianView: - Cтворено задачу: 123124
 2021-12-28 17:27:09 INFO  ConsoleUkrainianView: - Cтворено задачу: 123213123
 2021-12-28 17:27:51 INFO  ConsoleUkrainianView: - Cтворено задачу: vlad bondar
+2022-01-03 13:52:55 INFO  ConsoleUkrainianView: - Cтворено задачу: 123
+2022-01-03 13:53:11 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "d"
+2022-01-03 13:54:22 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "іваівавіа"
+2022-01-03 13:54:35 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "вццукцук"
+2022-01-03 13:54:45 ERROR ConsoleUkrainianView: - Некоректна дата! java.time.format.DateTimeParseException: Text '123123' could not be parsed at index 0
+2022-01-03 13:57:50 ERROR ConsoleUkrainianView: - Некоректна дата!  java.time.format.DateTimeParseException: Text '202-12-12 12:12' could not be parsed at index 0
+2022-01-03 13:58:25 ERROR ConsoleUkrainianView: - Некоректна дата!  java.lang.NumberFormatException: For input string: "dsgsdgjsldgksdglhdsg"
+2022-01-03 13:58:54 INFO  ConsoleUkrainianView: - Cтворено задачу: 12124124
+2022-01-03 13:59:02 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "sdkgjs;dgjsd;gkjsd;gks;jkgd"
+2022-01-03 14:02:00 INFO  ConsoleUkrainianView: - Cтворено задачу: 123124124124
+2022-01-03 14:06:48 ERROR ConsoleUkrainianView: - Некоректна дата!  java.time.format.DateTimeParseException: Text 'notificationOn' could not be parsed at index 0
+2022-01-03 14:07:14 INFO  ConsoleUkrainianView: - Cтворено задачу: 123123123
+2022-01-03 14:13:27 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "апдвырпдолав"
+2022-01-03 14:13:33 ERROR ConsoleUkrainianView: - NullpointExp: java.lang.NullPointerException: Cannot read field "task" because "current" is null
+2022-01-03 14:14:13 INFO  ConsoleUkrainianView: - Cтворено задачу: 123456
+2022-01-03 14:15:41 ERROR ConsoleUkrainianView: - Некоректна дата! java.time.format.DateTimeParseException: Text '1234ывпп' could not be parsed at index 4
+2022-01-03 14:17:08 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "fdghljkghlewjt"
+2022-01-03 14:17:52 INFO  ConsoleUkrainianView: - Cтворено задачу: 123123
+2022-01-03 14:21:37 ERROR ConsoleUkrainianView: - Некоректна дата! java.time.format.DateTimeParseException: Text '213123213' could not be parsed at index 0
+2022-01-03 14:22:21 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "newTask1"
+2022-01-03 14:24:33 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "dfjlkglfdgnjfdljg"
+2022-01-03 14:28:10 INFO  ConsoleUkrainianView: - Cтворено задачу: Task
+2022-01-03 14:28:16 ERROR ConsoleUkrainianView: - NullpointExp indexChange
+2022-01-03 14:28:18 ERROR ControllerImpl: - Невідома команда у menuContext()java.lang.NumberFormatException: For input string: ""
+2022-01-03 14:28:29 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "12476124782112784"
+2022-01-03 14:28:35 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "fdgjkj;dfl"
