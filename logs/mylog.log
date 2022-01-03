@@ -27,3 +27,5 @@
 2022-01-03 14:28:18 ERROR ControllerImpl: - Невідома команда у menuContext()java.lang.NumberFormatException: For input string: ""
 2022-01-03 14:28:29 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "12476124782112784"
 2022-01-03 14:28:35 ERROR ConsoleUkrainianView: - Помилка вводу: java.lang.NumberFormatException: For input string: "fdgjkj;dfl"
+2022-01-03 14:42:52 ERROR ConsoleUkrainianView: - NullpointExp indexChange1
+2022-01-03 14:47:40 ERROR ConsoleUkrainianView: - NullpointExp indexChange1

@@ -133,6 +133,11 @@ public class ConsoleUkrainianView implements View{
             System.out.println("Помилка вводу");
         }
         index--;
+        if(!(index < list.size() && index >= 0)){
+            logger.error("NullpointExp indexChange" + index);
+            System.out.println("Некоректный индекс" + index);
+            return;
+        }
         System.out.println("Який параметр ви хочете змінити?\n" +
                 "1. Назву\n" +
                 "2. Час\n" +
@@ -148,9 +153,9 @@ public class ConsoleUkrainianView implements View{
             System.out.println("Помилка вводу");
             return;
         }
-        if(indexChange < 1){
-            logger.error("NullpointExp indexChange");
-            System.out.println("Некоректный индекс");
+        if(indexChange < 1 || indexChange > 4){
+            logger.error("NullpointExp indexChange" + indexChange);
+            System.out.println("Некоректный индекс" + indexChange);
             return;
         }
         if(indexChange == 1){
