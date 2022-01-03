@@ -2,6 +2,9 @@ package ua.edu.sumdu.j2se.bondar.tasks.model;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import ua.edu.sumdu.j2se.bondar.tasks.view.ConsoleUkrainianView;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -9,7 +12,7 @@ import java.util.Scanner;
 
 public class TaskIO {
 
-
+    private final static Logger logger = LogManager.getLogger(ConsoleUkrainianView.class);
 
     public static void write(AbstractTaskList tasks, OutputStream out){
         try (ObjectOutputStream file = new ObjectOutputStream(out)){
@@ -30,7 +33,7 @@ public class TaskIO {
                 }
             }
         } catch (IOException e) {
-
+            logger.error("IOException  in TASKIO (write): " + e);
         }
     }
 
@@ -51,14 +54,14 @@ public class TaskIO {
 
             }
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("IOException | ClassNotFoundException in TASKIO (read): " + e);
         }
     }
     public static void writeBinary(AbstractTaskList tasks, File file){
         try (FileOutputStream fileWriter = new FileOutputStream(file)) {
             write(tasks,fileWriter);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException  in TASKIO (writeBinary): " + e);
         }
     }
 
@@ -66,7 +69,7 @@ public class TaskIO {
         try(FileInputStream fileReader = new FileInputStream(file)){
             read(tasks,fileReader);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException  in TASKIO (readBinary): " + e);
         }
     }
 
@@ -86,7 +89,7 @@ public class TaskIO {
         try (BufferedWriter buffered = new BufferedWriter(out);){
             buffered.write(stringBuilder.toString());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException  in TASKIO (write): " + e);
         }
 
     }
@@ -108,7 +111,7 @@ public class TaskIO {
         try {
             write(tasks,new FileWriter(file));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IOException  in TASKIO (writeText): " + e);
         }
     }
 
@@ -116,7 +119,7 @@ public class TaskIO {
         try {
             read(tasks,new FileReader(file));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            logger.error("IOException  in TASKIO (readText): " + e);
         }
     }
 }
